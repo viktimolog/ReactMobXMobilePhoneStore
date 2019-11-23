@@ -13,7 +13,7 @@ class Home extends React.Component {
   };
 
   render () {
-    const { homeStore } = this.props.store;
+    const { homeStore, cartStore } = this.props.store;
 
     const productsCards = homeStore.products.map((product) =>
       <Card key={product.id} className="text-center">
@@ -22,8 +22,15 @@ class Home extends React.Component {
         <Text>
           Price: {product.price}
         </Text>
-        <Button>
-          Add to cart
+        <Button
+          variant={cartStore.isCartProduct(product.id) ? "warning" : "primary"}
+          onClick={()=>{
+            cartStore.isCartProduct(product.id)
+              ? cartStore.removeCartProduct(product.id)
+              : cartStore.addCartProduct(product);
+          }}
+        >
+          {cartStore.isCartProduct(product.id) ? "Delete from cart" : "Add to cart"}
         </Button>
         </Body>
         <Footer>
@@ -36,7 +43,8 @@ class Home extends React.Component {
 
     return (
       <div>
-        {homeStore.getServerResponseStatus === 'pending'
+        {(homeStore.getServerResponseStatus === 'pending' ||
+          cartStore.getServerResponseStatus === 'pending')
           ?<LoaderComponent/>
           :(homeStore.getServerResponseStatus === 'rejected')
             ?<ServerErrorComponent/>

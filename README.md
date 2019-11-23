@@ -8,4 +8,4 @@ Install all dependencies: npm install
 
 Run: npm run dev
 
-Viewing the application in your browser: http://localhost:3000
+Viewing the application in your browser: http://localhost:8080

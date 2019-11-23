@@ -1,12 +1,80 @@
 class DataStore {
   products = getData();
 
-  getProducts() {
+  cartsProducts = [
+    {
+      id: 100,
+      price: 800,
+      quantity: 1,
+      rest: 10,
+      title: "Iphone 11"
+    },
+    {
+      id: 103,
+      price: 800,
+      quantity: 1,
+      rest: 5,
+      title: "Samsung S10"
+    }
+  ];
+
+  getProducts () {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve([...this.products]);
         reject ('Failed to load Products Data');
       }, 100);
+    });
+  };
+
+  getCartProducts () {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve([...this.cartsProducts]);
+        reject ('Failed to load Cart Data');
+      }, 100);
+    });
+  };
+
+  addCartProduct (cartProduct) {
+    this.cartsProducts.push(cartProduct);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({...cartProduct});
+        reject ('Add product fail');
+      }, 100);
+    });
+  };
+
+  removeCartProduct (id) {
+    const index = this.cartsProducts.findIndex(product => product.id === id);
+    this.cartsProducts.splice(index, 1);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(true);
+        reject ('Remove product fail');
+      }, 100);
+    });
+  };
+
+  updateCartProduct (cartProduct) {
+    const index = this.cartsProducts.findIndex(product => product.id === cartProduct.id);
+    this.cartsProducts[index] = cartProduct;
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({...cartProduct});
+        reject ('Update product fail');
+      }, 100);
+    });
+  };
+
+  clearCart () {
+    this.cartsProducts = [];
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(true);
+        reject ('Clear cart fail');
+      }, 500);
     });
   };
 }
