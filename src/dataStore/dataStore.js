@@ -87,6 +87,15 @@ class DataStore {
       }, 100);
     });
   };
+
+  placeOrder() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(true);
+        reject ('Place order fail');
+      }, 500);
+    });
+  };
 }
 
 export default new DataStore();
