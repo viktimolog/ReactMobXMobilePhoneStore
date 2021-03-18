@@ -4,8 +4,8 @@ Clone the project: git clone https://github.com/viktimolog/ReactMobXMobilePhoneS
 
 Change the directory: cd ReactMobXMobilePhoneStore
 
-Install all dependencies: npm install
+Install all dependencies: yarn
 
-Run: npm run dev
+Run: yarn run dev
 
 Viewing the application in your browser: http://localhost:8080
