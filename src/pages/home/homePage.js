@@ -10,32 +10,6 @@ const { Body, Title, Text, Footer } = Card;
 const Home = ({store: {cartStore, homeStore}}) => {
   useEffect(() => homeStore.getProducts(), []);
 
-  const productsCards = homeStore.products.map(product =>
-    <Card key={product.id} className="text-center">
-      <Body>
-      <Title>{product.title}</Title>
-      <Text>
-        Price: {product.price}
-      </Text>
-      <Button
-        variant={cartStore.isCartProduct(product.id) ? 'warning' : 'primary'}
-        onClick={() => {
-          cartStore.isCartProduct(product.id)
-            ? cartStore.removeCartProduct(product.id)
-            : cartStore.addCartProduct(product);
-        }}
-      >
-        {cartStore.isCartProduct(product.id) ? 'Delete from cart' : 'Add to cart'}
-      </Button>
-      </Body>
-      <Footer>
-        <Link to={UrlBuild('product', {id: product.id})}>
-          More info
-        </Link>
-      </Footer>
-    </Card>
-  );
-
   return(
     <>
       {[homeStore.getServerResponseStatus
@@ -44,7 +18,31 @@ const Home = ({store: {cartStore, homeStore}}) => {
         : homeStore.getServerResponseStatus === 'rejected'
           ? <ServerErrorComponent/>
           : <CardColumns>
-            {productsCards}
+            {homeStore.products.map(product =>
+                <Card key={product.id} className="text-center">
+                    <Body>
+                        <Title>{product.title}</Title>
+                        <Text>
+                            Price: {product.price}
+                        </Text>
+                        <Button
+                            variant={cartStore.isCartProduct(product.id) ? 'warning' : 'primary'}
+                            onClick={() => {
+                                cartStore.isCartProduct(product.id)
+                                    ? cartStore.removeCartProduct(product.id)
+                                    : cartStore.addCartProduct(product);
+                            }}
+                        >
+                            {cartStore.isCartProduct(product.id) ? 'Delete from cart' : 'Add to cart'}
+                        </Button>
+                    </Body>
+                    <Footer>
+                        <Link to={UrlBuild('product', {id: product.id})}>
+                            More info
+                        </Link>
+                    </Footer>
+                </Card>
+            )}
           </CardColumns>}
     </>
   )
